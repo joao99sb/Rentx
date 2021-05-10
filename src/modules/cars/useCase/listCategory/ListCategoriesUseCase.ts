@@ -6,7 +6,7 @@ import { inject, injectable } from 'tsyringe';
 export class ListCategoriesUseCase {
   constructor(
     @inject('CategoriesRepository')
-    private categoriesRepository: ICategoriesRepository,
+    private categoriesRepository: ICategoriesRepository
   ) {}
 
   async execute(): Promise<Category[]> {

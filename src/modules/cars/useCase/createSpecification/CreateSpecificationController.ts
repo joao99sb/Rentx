@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { container } from 'tsyringe';
+
 import { CreateSpecificationUseCase } from './CreateSpecificationUseCase';
 
 export class CreateSpecificationController {
@@ -7,7 +8,7 @@ export class CreateSpecificationController {
     const { name, description } = request.body;
 
     const createSpecificationUseCase = container.resolve(
-      CreateSpecificationUseCase,
+      CreateSpecificationUseCase
     );
 
     createSpecificationUseCase.execute({
