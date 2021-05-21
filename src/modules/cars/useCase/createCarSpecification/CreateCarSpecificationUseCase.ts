@@ -34,7 +34,6 @@ export class CreateCarSpecificationUseCase {
     carExist.specifications = specifications;
 
     const car = await this.carsRepository.create(carExist);
-    console.log(car.specifications);
 
     return carExist;
   }
