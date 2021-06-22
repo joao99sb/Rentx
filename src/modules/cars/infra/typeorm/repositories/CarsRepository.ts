@@ -26,7 +26,6 @@ export class CarsRepository implements ICarsRepository {
       carExist.specifications = specifications;
 
       const carUpdated = await this.repository.save(carExist);
-      console.log(carUpdated);
       return carUpdated;
     }
     const car = this.repository.create({

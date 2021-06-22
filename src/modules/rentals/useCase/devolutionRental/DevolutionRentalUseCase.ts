@@ -53,7 +53,6 @@ export class DevolutionRentalUseCase {
     if (!car) {
       throw new AppError('Car does not exist');
     }
-    console.log(delay);
     if (delay > 0) {
       const calculate_fine = delay * car.fine_amount;
 

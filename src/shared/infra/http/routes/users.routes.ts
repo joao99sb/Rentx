@@ -18,7 +18,7 @@ usersRoutes.patch(
   '/avatar',
   ensureAuthenticated,
   uploadAvatar.single('avatar'),
-  updateAvatarController.hendle
+  updateAvatarController.handle
 );
 
 export { usersRoutes };

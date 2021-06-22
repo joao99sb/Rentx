@@ -27,13 +27,13 @@ carsRoutes.post(
   createCarController.handle
 );
 
-carsRoutes.get('/available', listAvailableCarsController.hendle);
+carsRoutes.get('/available', listAvailableCarsController.handle);
 
 carsRoutes.post(
   '/specifications/:id',
   ensureAuthenticated,
   ensureAdmin,
-  createCarSpecificationController.hendle
+  createCarSpecificationController.handle
 );
 
 carsRoutes.post(

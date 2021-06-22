@@ -23,7 +23,6 @@ export class DeleteCarImagesUseCase {
   async execute({ car_id, images_ids }: IRequest): Promise<void> {
     const carExist = await this.carsReposritory.findById(car_id);
     const carImages = await this.carsImagesRepository.findByIds(images_ids);
-    console.log(car_id);
 
     if (carImages.length < images_ids.length) {
       throw new AppError('error in some image search');

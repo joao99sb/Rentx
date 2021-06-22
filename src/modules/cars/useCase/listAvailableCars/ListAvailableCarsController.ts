@@ -4,7 +4,7 @@ import { container } from 'tsyringe';
 import { ListAvailableCarsUseCase } from './ListAvailableCarsUseCase';
 
 export class ListAvailableCarsController {
-  async hendle(request: Request, response: Response): Promise<Response> {
+  async handle(request: Request, response: Response): Promise<Response> {
     const { brand, name, category_id } = request.query;
 
     const listAvailableCarsUseCase = container.resolve(
