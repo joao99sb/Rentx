@@ -27,4 +27,7 @@ export class DayjsDateProvider implements IDateProvider {
 
     return dayjs(end_date_utc).diff(start_date_utc, 'days');
   }
+  addHours(hours: number): Date {
+    return dayjs().add(hours, 'hour').toDate();
+  }
 }
