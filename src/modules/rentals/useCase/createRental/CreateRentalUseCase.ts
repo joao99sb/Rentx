@@ -1,15 +1,15 @@
+import { inject, injectable } from 'tsyringe';
+
 import { ICarsRepository } from '@modules/cars/repositories/ICarsRepository';
 import { Rental } from '@modules/rentals/infra/typeorm/entities/Rental';
 import { IRentalsRepository } from '@modules/rentals/repositories/IRentalsRepository';
-import { inject, injectable } from 'tsyringe';
-
 import { IDateProvider } from '@shared/container/providers/DateProvider/IDateProvider';
 import { AppError } from '@shared/errors/AppError';
 
 interface IRequest {
-  user_id: string;
-  car_id: string;
-  expected_return_date: Date;
+  userId: string;
+  carId: string;
+  expectedReturnDate: Date;
 }
 
 @injectable()
@@ -26,20 +26,20 @@ export class CreateRentalUseCase {
   ) {}
 
   async execute({
-    car_id,
-    expected_return_date,
-    user_id,
+    carId,
+    expectedReturnDate,
+    userId,
   }: IRequest): Promise<Rental> {
     const minimunHour = 24;
 
     const carUnAvailable = await this.rentalsRepository.findOpenRentalByCar(
-      car_id
+      carId
     );
 
     if (carUnAvailable) throw new AppError('car is unavailable');
 
     const rentalOpenToUser = await this.rentalsRepository.findOpenRentalByUser(
-      user_id
+      userId
     );
 
     if (rentalOpenToUser) {
@@ -49,7 +49,7 @@ export class CreateRentalUseCase {
 
     const compare = this.dateProvider.compareInHours(
       dateNow,
-      expected_return_date
+      expectedReturnDate
     );
 
     if (compare < minimunHour) {
@@ -57,12 +57,12 @@ export class CreateRentalUseCase {
     }
 
     const rental = await this.rentalsRepository.create({
-      user_id,
-      car_id,
-      expected_return_date,
+      userId,
+      carId,
+      expectedReturnDate,
     });
 
-    await this.carsRepository.updateAvailable(car_id, false);
+    await this.carsRepository.updateAvailable(carId, false);
 
     return rental;
   }

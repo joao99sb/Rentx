@@ -1,10 +1,10 @@
-import auth from '@config/auth';
-import { IUsersRepository } from '@modules/accounts/repositories/IUsersRepository';
-import { IUsersTokensRepository } from '@modules/accounts/repositories/IUsersTokensRepository';
 import { compare } from 'bcryptjs';
 import { sign } from 'jsonwebtoken';
 import { inject, injectable } from 'tsyringe';
 
+import auth from '@config/auth';
+import { IUsersRepository } from '@modules/accounts/repositories/IUsersRepository';
+import { IUsersTokensRepository } from '@modules/accounts/repositories/IUsersTokensRepository';
 import { IDateProvider } from '@shared/container/providers/DateProvider/IDateProvider';
 import { AppError } from '@shared/errors/AppError';
 
@@ -36,11 +36,11 @@ export class AuthenticateUserUseCase {
   async execute({ email, password }: IRequest): Promise<IResponse> {
     const user = await this.userRepository.findByEmail(email);
     const {
-      expires_in_token,
-      secret_token,
-      secret_refresh_token,
-      expires_id_refresh_token,
-      expires_refresh_token_days,
+      expiresIdRefreshToken,
+      expiresInToken,
+      expiresRefreshTokenDays,
+      secretRefreshToken,
+      secretToken,
     } = auth;
     if (!user) {
       throw new AppError('email or password incorrect');
@@ -52,27 +52,24 @@ export class AuthenticateUserUseCase {
       throw new AppError('email or password incorrect');
     }
 
-    const token = sign({}, secret_token, {
+    const token = sign({}, secretToken, {
       subject: user.id,
-      expiresIn: expires_in_token,
+      expiresIn: expiresInToken,
     });
-    if (!user.id) {
-      throw new AppError('user id not exist');
-    }
 
-    const refresh_token = sign({ email }, secret_refresh_token, {
+    const refresh_token = sign({ email }, secretRefreshToken, {
       subject: user.id,
-      expiresIn: expires_id_refresh_token,
+      expiresIn: expiresIdRefreshToken,
     });
 
     const refresh_token_expires_date = this.dateProvider.addDays(
-      expires_refresh_token_days
+      expiresRefreshTokenDays
     );
 
     await this.usersTokensRepository.create({
-      expires_date: refresh_token_expires_date,
-      refresh_token,
-      user_id: user.id,
+      expiresDate: refresh_token_expires_date,
+      refreshToken: refresh_token,
+      userId: user.id,
     });
 
     const tokenReturn: IResponse = {

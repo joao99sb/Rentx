@@ -1,17 +1,17 @@
-import { Car } from '@modules/cars/infra/typeorm/entities/Car';
-import { ICarsRepository } from '@modules/cars/repositories/ICarsRepository';
 import { inject, injectable } from 'tsyringe';
 
+import { Car } from '@modules/cars/infra/typeorm/entities/Car';
+import { ICarsRepository } from '@modules/cars/repositories/ICarsRepository';
 import { AppError } from '@shared/errors/AppError';
 
 interface IRequest {
   name: string;
   description: string;
-  daily_rate: number;
-  license_plate: string;
-  fine_amount: number;
+  dailyRate: number;
+  licensePlate: string;
+  fineAmount: number;
   brand: string;
-  category_id: string;
+  categoryId: string;
 }
 
 @injectable()
@@ -25,13 +25,13 @@ export class CreateCarUseCase {
     brand,
     name,
     description,
-    daily_rate,
-    fine_amount,
-    license_plate,
-    category_id,
+    dailyRate,
+    fineAmount,
+    licensePlate,
+    categoryId,
   }: IRequest): Promise<Car> {
     const carAlreadyExists = await this.carsRepository.findByLicensePlate(
-      license_plate
+      licensePlate
     );
 
     if (carAlreadyExists) {
@@ -41,10 +41,10 @@ export class CreateCarUseCase {
       brand,
       name,
       description,
-      daily_rate,
-      fine_amount,
-      license_plate,
-      category_id,
+      dailyRate,
+      fineAmount,
+      licensePlate,
+      categoryId,
     });
 
     return car;

@@ -12,8 +12,8 @@ export class RefreshTokenController {
 
     const refreshTokenUseCase = container.resolve(RefreshTokenUseCase);
 
-    const refresh_token = await refreshTokenUseCase.execute(token);
+    const refreshToken = await refreshTokenUseCase.execute(token);
 
-    return response.json(refresh_token);
+    return response.json(refreshToken);
   }
 }

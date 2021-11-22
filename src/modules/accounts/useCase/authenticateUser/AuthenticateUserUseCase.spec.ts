@@ -1,6 +1,7 @@
 import { ICreateUserDTO } from '@modules/accounts/DTOs/ICreateUserDTO';
 import { UsersRepositoryInMemory } from '@modules/accounts/repositories/in-memory/UsersRepositorytInMemory';
-
+import { UsersTokensRepositoryInMemory } from '@modules/accounts/repositories/in-memory/UsersTokensRepositoryInMemory';
+import { DayjsDateProvider } from '@shared/container/providers/DateProvider/implementations/DayjsDateProvader';
 import { AppError } from '@shared/errors/AppError';
 
 import { CreateUserUseCase } from '../createUser/CreateUserUseCase';
@@ -9,19 +10,23 @@ import { AuthenticateUserUseCase } from './AuthenticateUserUseCase';
 let authenticateUserUseCase: AuthenticateUserUseCase;
 let usersRepositoryInMemory: UsersRepositoryInMemory;
 let createUserUseCase: CreateUserUseCase;
+let usersTokensRepositoryInMemory: UsersTokensRepositoryInMemory;
+let dateProvider: DayjsDateProvider;
 
 describe('Authenticate user', () => {
   beforeEach(() => {
     usersRepositoryInMemory = new UsersRepositoryInMemory();
     authenticateUserUseCase = new AuthenticateUserUseCase(
-      usersRepositoryInMemory
+      usersRepositoryInMemory,
+      usersTokensRepositoryInMemory,
+      dateProvider
     );
     createUserUseCase = new CreateUserUseCase(usersRepositoryInMemory);
   });
 
   it('should be able to authenticate an user', async () => {
     const user: ICreateUserDTO = {
-      driver_license: '001122',
+      driverLicense: '001122',
       email: 'user@test.com',
       password: '123456',
       name: 'User Test',
@@ -48,7 +53,7 @@ describe('Authenticate user', () => {
 
   it('should not be able to authenticate  with incorrect password', async () => {
     const user: ICreateUserDTO = {
-      driver_license: '000111',
+      driverLicense: '000111',
       email: 'user1@test.com',
       password: '1234',
       name: 'user test',

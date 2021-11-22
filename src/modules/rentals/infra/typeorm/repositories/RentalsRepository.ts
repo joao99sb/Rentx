@@ -1,6 +1,7 @@
+import { getRepository, Repository } from 'typeorm';
+
 import { ICreateRentalDTO } from '@modules/rentals/DTOs/ICreateRentalDTO';
 import { IRentalsRepository } from '@modules/rentals/repositories/IRentalsRepository';
-import { getRepository, Repository } from 'typeorm';
 
 import { Rental } from '../entities/Rental';
 
@@ -11,32 +12,32 @@ export class RentalsRepository implements IRentalsRepository {
     this.repository = getRepository(Rental);
   }
 
-  async findOpenRentalByCar(car_id: string): Promise<Rental | undefined> {
+  async findOpenRentalByCar(carId: string): Promise<Rental> {
     const openByCar = await this.repository.findOne({
-      where: { car_id, end_date: null },
+      where: { carId, endDate: null },
     });
     return openByCar;
   }
-  async findOpenRentalByUser(user_id: string): Promise<Rental | undefined> {
+  async findOpenRentalByUser(userId: string): Promise<Rental> {
     const openByUser = await this.repository.findOne({
-      where: { user_id, end_date: null },
+      where: { userId, endDate: null },
     });
     return openByUser;
   }
   async create({
-    car_id,
-    user_id,
-    expected_return_date,
-    end_date,
+    carId,
+    userId,
+    expectedReturnDate,
+    endDate,
     id,
     total,
   }: ICreateRentalDTO): Promise<Rental> {
     const rental = this.repository.create({
-      car_id,
-      expected_return_date,
-      user_id,
+      carId,
+      expectedReturnDate,
+      userId,
       id,
-      end_date,
+      endDate,
       total,
     });
 
@@ -44,7 +45,7 @@ export class RentalsRepository implements IRentalsRepository {
     return rental;
   }
 
-  async findById(id: string): Promise<Rental | undefined> {
+  async findById(id: string): Promise<Rental> {
     const rental = await this.repository.findOne(id);
     return rental;
   }

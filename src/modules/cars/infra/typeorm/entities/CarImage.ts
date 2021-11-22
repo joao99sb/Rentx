@@ -5,14 +5,14 @@ export class CarImage {
   @PrimaryColumn()
   id: string;
 
-  @Column()
-  car_id: string;
+  @Column({ name: 'car_id' })
+  carId: string;
 
-  @Column()
-  image_name: string;
+  @Column({ name: 'image_name' })
+  imageName: string;
 
-  @CreateDateColumn()
-  created_at: Date;
+  @CreateDateColumn({ name: 'created_at' })
+  createdAt: Date;
 
   constructor() {
     if (!this.id) {

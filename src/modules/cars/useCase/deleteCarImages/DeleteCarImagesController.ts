@@ -10,7 +10,7 @@ export class DeleteCarImagesController {
 
     const deleteCarImagesUseCase = container.resolve(DeleteCarImagesUseCase);
 
-    await deleteCarImagesUseCase.execute({ car_id: id, images_ids });
+    await deleteCarImagesUseCase.execute({ carId: id, imagesIds: images_ids });
 
     return response.status(200).send();
   }

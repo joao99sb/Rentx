@@ -1,10 +1,11 @@
-import { IUsersRepository } from '@modules/accounts/repositories/IUsersRepository';
-import { deleteFile } from '@utils/file';
 import { inject, injectable } from 'tsyringe';
 
+import { IUsersRepository } from '@modules/accounts/repositories/IUsersRepository';
+import { deleteFile } from '@utils/file';
+
 interface IRequest {
-  user_id: string;
-  avatar_file: string;
+  userId: string;
+  avatarFile: string;
 }
 
 @injectable()
@@ -14,14 +15,14 @@ export class UpdateUserAvatarUseCase {
     private usersRepository: IUsersRepository
   ) {}
 
-  async execute({ avatar_file, user_id }: IRequest): Promise<void> {
-    const user = await this.usersRepository.findById(user_id);
+  async execute({ avatarFile, userId }: IRequest): Promise<void> {
+    const user = await this.usersRepository.findById(userId);
 
     if (user) {
       if (user.avatar) {
         await deleteFile(`./tmp/avatar/${user.avatar}`);
       }
-      user.avatar = avatar_file;
+      user.avatar = avatarFile;
       await this.usersRepository.create(user);
     }
   }

@@ -1,13 +1,13 @@
-import { ICarsImagesRepository } from '@modules/cars/repositories/ICarsImagesRepository';
-import { ICarsRepository } from '@modules/cars/repositories/ICarsRepository';
-import { deleteFile } from '@utils/file';
 import { inject, injectable } from 'tsyringe';
 
+import { ICarsImagesRepository } from '@modules/cars/repositories/ICarsImagesRepository';
+import { ICarsRepository } from '@modules/cars/repositories/ICarsRepository';
 import { AppError } from '@shared/errors/AppError';
+import { deleteFile } from '@utils/file';
 
 interface IRequest {
-  car_id: string;
-  images_ids: string[];
+  carId: string;
+  imagesIds: string[];
 }
 
 @injectable()
@@ -20,11 +20,11 @@ export class DeleteCarImagesUseCase {
     private carsReposritory: ICarsRepository
   ) {}
 
-  async execute({ car_id, images_ids }: IRequest): Promise<void> {
-    const carExist = await this.carsReposritory.findById(car_id);
-    const carImages = await this.carsImagesRepository.findByIds(images_ids);
+  async execute({ carId, imagesIds }: IRequest): Promise<void> {
+    const carExist = await this.carsReposritory.findById(carId);
+    const carImages = await this.carsImagesRepository.findByIds(imagesIds);
 
-    if (carImages.length < images_ids.length) {
+    if (carImages.length < imagesIds.length) {
       throw new AppError('error in some image search');
     }
 
@@ -32,13 +32,13 @@ export class DeleteCarImagesUseCase {
       throw new AppError('car do not exist');
     }
     carImages.forEach(async image => {
-      if (image.car_id !== car_id) {
+      if (image.carId !== carId) {
         throw new AppError('this image do not belong to this car');
       }
 
-      await deleteFile(`./tmp/cars/${image.image_name}`);
+      await deleteFile(`./tmp/cars/${image.imageName}`);
     });
 
-    await this.carsImagesRepository.removeImage(images_ids);
+    await this.carsImagesRepository.removeImage(imagesIds);
   }
 }

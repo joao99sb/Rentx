@@ -17,11 +17,11 @@ describe('list cars', () => {
     const car = await carsRepositoryInMemory.create({
       brand: 'Car_brand',
       name: 'Car 1',
-      category_id: 'categoryID',
-      daily_rate: 110.0,
+      categoryId: 'categoryID',
+      dailyRate: 110.0,
       description: 'Car description',
-      fine_amount: 40,
-      license_plate: 'ABC-1234',
+      fineAmount: 40,
+      licensePlate: 'ABC-1234',
     });
 
     const cars = await listAvailableCarsUseCase.execute({});
@@ -33,11 +33,11 @@ describe('list cars', () => {
     const car = await carsRepositoryInMemory.create({
       brand: 'Car_brand_test',
       name: 'Car 2',
-      category_id: 'categoryID',
-      daily_rate: 110.0,
+      categoryId: 'categoryID',
+      dailyRate: 110.0,
       description: 'Car description',
-      fine_amount: 40,
-      license_plate: 'ABC-1235',
+      fineAmount: 40,
+      licensePlate: 'ABC-1235',
     });
 
     const cars = await listAvailableCarsUseCase.execute({
@@ -51,11 +51,11 @@ describe('list cars', () => {
     const car = await carsRepositoryInMemory.create({
       brand: 'Car_brand',
       name: 'Car 3',
-      category_id: 'categoryID',
-      daily_rate: 110.0,
+      categoryId: 'categoryID',
+      dailyRate: 110.0,
       description: 'Car description',
-      fine_amount: 40,
-      license_plate: 'ABC-1236',
+      fineAmount: 40,
+      licensePlate: 'ABC-1236',
     });
 
     const cars = await listAvailableCarsUseCase.execute({
@@ -69,15 +69,15 @@ describe('list cars', () => {
     const car = await carsRepositoryInMemory.create({
       brand: 'Car_brand',
       name: 'Car 4',
-      category_id: '12345',
-      daily_rate: 110.0,
+      categoryId: '12345',
+      dailyRate: 110.0,
       description: 'Car description',
-      fine_amount: 40,
-      license_plate: 'ABC-1234',
+      fineAmount: 40,
+      licensePlate: 'ABC-1234',
     });
 
     const cars = await listAvailableCarsUseCase.execute({
-      category_id: '12345',
+      categoryId: '12345',
     });
 
     expect(cars).toEqual([car]);

@@ -13,8 +13,8 @@ export class CreateCarSpecificationController {
     );
 
     const cars = await createCarSpecificationUseCase.execute({
-      car_id: id,
-      specifications_id,
+      carId: id,
+      specificationsId: specifications_id,
     });
 
     return response.json(cars);

@@ -1,6 +1,7 @@
+import { getRepository, Repository } from 'typeorm';
+
 import { ICreateUserTokenDTO } from '@modules/accounts/DTOs/ICreateUserTokenDTO';
 import { IUsersTokensRepository } from '@modules/accounts/repositories/IUsersTokensRepository';
-import { getRepository, Repository } from 'typeorm';
 
 import { UserTokens } from '../entities/UserToken';
 
@@ -10,30 +11,36 @@ export class UsersTokensRepository implements IUsersTokensRepository {
   constructor() {
     this.repository = getRepository(UserTokens);
   }
+  async findByRefreshToken(refreshToken: string): Promise<UserTokens> {
+    const userToken = await this.repository.findOne({
+      refreshToken,
+    });
+    return userToken;
+  }
   async deleteById(id: string): Promise<void> {
     await this.repository.delete(id);
   }
   async findByUserIdAndRefreshToken(
-    user_id: string,
-    refresh_token: string
-  ): Promise<UserTokens | undefined> {
+    userId: string,
+    refreshToken: string
+  ): Promise<UserTokens> {
     const userTokens = await this.repository.findOne({
-      user_id,
-      refresh_token,
+      userId,
+      refreshToken,
     });
 
     return userTokens;
   }
 
   async create({
-    expires_date,
-    refresh_token,
-    user_id,
+    expiresDate,
+    refreshToken,
+    userId,
   }: ICreateUserTokenDTO): Promise<UserTokens> {
     const userToken = this.repository.create({
-      refresh_token,
-      expires_date,
-      user_id,
+      refreshToken,
+      expiresDate,
+      userId,
     });
 
     await this.repository.save(userToken);

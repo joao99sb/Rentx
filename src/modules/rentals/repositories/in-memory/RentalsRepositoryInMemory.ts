@@ -4,36 +4,36 @@ import { Rental } from '@modules/rentals/infra/typeorm/entities/Rental';
 import { IRentalsRepository } from '../IRentalsRepository';
 
 export class RentalsRepositoryInMemory implements IRentalsRepository {
-  async findByUser(user_id: string): Promise<Rental[]> {
-    return this.rentals.filter(rental => rental.user_id === user_id);
+  async findByUser(userId: string): Promise<Rental[]> {
+    return this.rentals.filter(rental => rental.userId === userId);
   }
-  async findById(id: string): Promise<Rental | undefined> {
+  async findById(id: string): Promise<Rental> {
     return this.rentals.find(rental => rental.id === id);
   }
   rentals: Rental[] = [];
 
-  async findOpenRentalByCar(car_id: string): Promise<Rental | undefined> {
+  async findOpenRentalByCar(carId: string): Promise<Rental> {
     return this.rentals.find(
-      rental => rental.car_id === car_id && !rental.end_date
+      rental => rental.carId === carId && !rental.endDate
     );
   }
-  async findOpenRentalByUser(user_id: string): Promise<Rental | undefined> {
+  async findOpenRentalByUser(userId: string): Promise<Rental> {
     return this.rentals.find(
-      rental => rental.user_id === user_id && !rental.end_date
+      rental => rental.userId === userId && !rental.endDate
     );
   }
   async create({
-    car_id,
-    expected_return_date,
-    user_id,
+    carId,
+    expectedReturnDate,
+    userId,
   }: ICreateRentalDTO): Promise<Rental> {
     const rental = new Rental();
 
     Object.assign(rental, {
-      car_id,
-      expected_return_date,
-      user_id,
-      start_date: new Date(),
+      carId,
+      expectedReturnDate,
+      userId,
+      startDate: new Date(),
     });
     this.rentals.push(rental);
     return rental;

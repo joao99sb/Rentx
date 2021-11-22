@@ -1,11 +1,12 @@
+import { NextFunction, Request, Response } from 'express';
+
 import { UsersRepository } from '@modules/accounts/infra/typeorm/repositories/UsersRepositoryt';
 import { AppError } from '@shared/errors/AppError';
-import { NextFunction, Request, Response } from 'express';
 
 export async function ensureAdmin(
   request: Request,
   response: Response,
-  next: NextFunction,
+  next: NextFunction
 ): Promise<void> {
   const { id } = request.user;
   const userRepository = new UsersRepository();

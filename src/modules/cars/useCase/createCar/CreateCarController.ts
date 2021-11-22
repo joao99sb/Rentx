@@ -19,11 +19,11 @@ export class CreateCarController {
 
     const car = await createCarUseCase.execute({
       brand,
-      category_id,
-      daily_rate,
+      categoryId: category_id,
+      dailyRate: daily_rate,
       description,
-      fine_amount,
-      license_plate,
+      fineAmount: fine_amount,
+      licensePlate: license_plate,
       name,
     });
 

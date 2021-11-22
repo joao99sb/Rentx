@@ -1,5 +1,4 @@
 import { CarsRepositoryInMemory } from '@modules/cars/repositories/in-memory/CarsRepositoryInMemory';
-
 import { AppError } from '@shared/errors/AppError';
 
 import { CreateCarUseCase } from './CreateCarUseCase';
@@ -17,11 +16,11 @@ describe('create car', () => {
     const car = await createCarUseCase.execute({
       name: 'name car',
       description: 'description car',
-      daily_rate: 100,
-      fine_amount: 60,
+      dailyRate: 100,
+      fineAmount: 60,
       brand: 'Brand',
-      category_id: 'Category',
-      license_plate: 'ABC-1234',
+      categoryId: 'Category',
+      licensePlate: 'ABC-1234',
     });
 
     expect(car).toHaveProperty('id');
@@ -31,21 +30,21 @@ describe('create car', () => {
     await createCarUseCase.execute({
       name: 'name car1',
       description: 'description car',
-      daily_rate: 100,
-      fine_amount: 60,
+      dailyRate: 100,
+      fineAmount: 60,
       brand: 'Brand',
-      category_id: 'Category',
-      license_plate: 'ABC-1234',
+      categoryId: 'Category',
+      licensePlate: 'ABC-1234',
     });
     await expect(
       createCarUseCase.execute({
         name: 'name car2',
         description: 'description car',
-        daily_rate: 100,
-        fine_amount: 60,
+        dailyRate: 100,
+        fineAmount: 60,
         brand: 'Brand',
-        category_id: 'Category',
-        license_plate: 'ABC-1234',
+        categoryId: 'Category',
+        licensePlate: 'ABC-1234',
       })
     ).rejects.toEqual(new AppError('Car already exists'));
   });
@@ -54,11 +53,11 @@ describe('create car', () => {
     const car = await createCarUseCase.execute({
       name: 'car avalible',
       description: 'description car',
-      daily_rate: 100,
-      fine_amount: 60,
+      dailyRate: 100,
+      fineAmount: 60,
       brand: 'Brand',
-      category_id: 'Category',
-      license_plate: 'ABC-1235',
+      categoryId: 'Category',
+      licensePlate: 'ABC-1235',
     });
 
     expect(car.available).toBe(true);

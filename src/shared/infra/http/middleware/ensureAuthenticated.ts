@@ -1,9 +1,9 @@
-import auth from '@config/auth';
-import { UsersRepository } from '@modules/accounts/infra/typeorm/repositories/UsersRepositoryt';
-import { UsersTokensRepository } from '@modules/accounts/infra/typeorm/repositories/UsersTokenRepository';
 import { Response, Request, NextFunction } from 'express';
 import { verify } from 'jsonwebtoken';
 
+import auth from '@config/auth';
+import { UsersRepository } from '@modules/accounts/infra/typeorm/repositories/UsersRepositoryt';
+import { UsersTokensRepository } from '@modules/accounts/infra/typeorm/repositories/UsersTokenRepository';
 import { AppError } from '@shared/errors/AppError';
 
 interface IPayload {
@@ -24,13 +24,10 @@ export async function ensureAuthenticated(
   const [, token] = authHeader.split(' ');
 
   try {
-    const { sub: user_id } = verify(
-      token,
-      auth.secret_refresh_token
-    ) as IPayload;
+    const { sub: userId } = verify(token, auth.secretRefreshToken) as IPayload;
 
     const user = await usersTokensRepository.findByUserIdAndRefreshToken(
-      user_id,
+      userId,
       token
     );
 

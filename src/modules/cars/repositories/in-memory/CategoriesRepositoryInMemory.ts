@@ -7,7 +7,7 @@ import {
 export class CategoriesRepositoryInMamory implements ICategoriesRepository {
   categories: Category[] = [];
 
-  async findByName(name: string): Promise<Category | undefined> {
+  async findByName(name: string): Promise<Category> {
     const category = this.categories.find(category => category.name === name);
 
     return category;

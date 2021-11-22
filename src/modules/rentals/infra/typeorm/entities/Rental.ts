@@ -1,4 +1,3 @@
-import { Car } from '@modules/cars/infra/typeorm/entities/Car';
 import {
   Column,
   CreateDateColumn,
@@ -10,6 +9,8 @@ import {
 } from 'typeorm';
 import { v4 as uuidV4 } from 'uuid';
 
+import { Car } from '@modules/cars/infra/typeorm/entities/Car';
+
 @Entity('rentals')
 export class Rental {
   @PrimaryColumn()
@@ -19,29 +20,29 @@ export class Rental {
   @JoinColumn({ name: 'car_id' })
   car: Car;
 
-  @Column()
-  car_id: string;
+  @Column({ name: 'car_id' })
+  carId: string;
 
-  @Column()
-  user_id: string;
+  @Column({ name: 'user_id' })
+  userId: string;
 
-  @Column()
-  start_date: Date;
+  @Column({ name: 'start_date' })
+  startDate: Date;
 
-  @Column()
-  end_date: Date;
+  @Column({ name: 'end_date' })
+  endDate: Date;
 
-  @Column()
-  expected_return_date: Date;
+  @Column({ name: 'expected_return_date' })
+  expectedReturnDate: Date;
 
   @Column()
   total: number;
 
-  @CreateDateColumn()
-  created_at: Date;
+  @CreateDateColumn({ name: 'created_at' })
+  createdAt: Date;
 
-  @UpdateDateColumn()
-  updated_at: Date;
+  @UpdateDateColumn({ name: 'updated_at' })
+  updatedAt: Date;
 
   constructor() {
     if (!this.id) {

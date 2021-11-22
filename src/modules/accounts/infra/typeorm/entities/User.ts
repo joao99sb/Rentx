@@ -4,7 +4,7 @@ import { v4 as uuidV4 } from 'uuid';
 @Entity('users')
 export class User {
   @PrimaryColumn()
-  id?: string;
+  id: string;
 
   @Column()
   name: string;
@@ -15,8 +15,8 @@ export class User {
   @Column()
   password: string;
 
-  @Column()
-  driver_license: string;
+  @Column({ name: 'driver_license' })
+  driverLicense: string;
 
   @Column()
   isAdmin: boolean;
@@ -24,8 +24,8 @@ export class User {
   @Column()
   avatar: string;
 
-  @CreateDateColumn()
-  created_at: Date;
+  @CreateDateColumn({ name: 'created_at' })
+  createdAt: Date;
 
   constructor() {
     if (!this.id) {

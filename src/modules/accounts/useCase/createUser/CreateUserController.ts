@@ -13,7 +13,7 @@ export class CreateUserController {
       name,
       password,
       email,
-      driver_license,
+      driverLicense: driver_license,
     });
 
     return response.status(201).send();
