@@ -19,7 +19,7 @@ interface IResponse {
     email: string;
   };
   token: string;
-  refresh_token: string;
+  refreshToken: string;
 }
 
 @injectable()
@@ -57,18 +57,16 @@ export class AuthenticateUserUseCase {
       expiresIn: expiresInToken,
     });
 
-    const refresh_token = sign({ email }, secretRefreshToken, {
+    const refreshToken = sign({ email }, secretRefreshToken, {
       subject: user.id,
       expiresIn: expiresIdRefreshToken,
     });
 
-    const refresh_token_expires_date = this.dateProvider.addDays(
-      expiresRefreshTokenDays
-    );
+    const expiresDate = this.dateProvider.addDays(expiresRefreshTokenDays);
 
     await this.usersTokensRepository.create({
-      expiresDate: refresh_token_expires_date,
-      refreshToken: refresh_token,
+      expiresDate,
+      refreshToken,
       userId: user.id,
     });
 
@@ -78,7 +76,7 @@ export class AuthenticateUserUseCase {
         email: user.email,
         name: user.name,
       },
-      refresh_token,
+      refreshToken,
     };
 
     return tokenReturn;

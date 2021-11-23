@@ -35,7 +35,7 @@ export class SendForgotPasswordMailUseCase {
       'forgotPassword.hbs'
     );
 
-    if (!user) throw new AppError('user does not exists!');
+    if (!user) throw new AppError('User does not exists!');
 
     const token = uuidV4();
 

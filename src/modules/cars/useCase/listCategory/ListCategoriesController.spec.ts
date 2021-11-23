@@ -31,7 +31,7 @@ describe('List Categories', () => {
       email: 'admin@rentx.com',
       password: 'admin',
     });
-    const { token } = responseToken.body;
+    const { refreshToken } = responseToken.body;
 
     await request(app)
       .post('/categories')
@@ -40,7 +40,7 @@ describe('List Categories', () => {
         description: 'supertest',
       })
       .set({
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${refreshToken}`,
       });
 
     const response = await request(app).get('/categories');
