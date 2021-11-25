@@ -26,7 +26,6 @@ export class RefreshTokenUseCase {
   ) {}
   async execute(token: string): Promise<ITokenResponse> {
     const { email, sub } = verify(token, auth.secretRefreshToken) as IPayload;
-
     const userId = sub;
 
     const userTokens = await this.usersTokenRepository.findByUserIdAndRefreshToken(

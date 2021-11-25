@@ -1,9 +1,11 @@
 import 'reflect-metadata';
-
+import 'dotenv/config';
 import express, { NextFunction, Request, Response } from 'express';
 import 'express-async-errors';
+import { JsonWebTokenError } from 'jsonwebtoken';
 import swaggerUi from 'swagger-ui-express';
 
+import upload from '@config/upload';
 import { AppError } from '@shared/errors/AppError';
 import createConnection from '@shared/infra/typeorm';
 
@@ -17,7 +19,8 @@ const app = express();
 app.use(express.json());
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerFile));
-
+app.use('/avatar', express.static(`${upload.tempFolder}/avatar`));
+app.use('/car', express.static(`${upload.tempFolder}/car`));
 app.use(router);
 
 app.use(
@@ -26,6 +29,13 @@ app.use(
       if (err instanceof AppError) {
         return response.status(err.statusCode).json({
           message: err.message,
+        });
+      }
+      if (err instanceof JsonWebTokenError) {
+        const message =
+          err.message === 'invalid signature' ? 'invalid token' : err.message;
+        return response.status(403).json({
+          message,
         });
       }
       return response.status(500).json({

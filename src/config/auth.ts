@@ -1,7 +1,7 @@
 export default {
-  secretToken: '5c12500b53d69102809990ff29b39335',
+  secretToken: process.env.TOKEN_SECRET,
   expiresInToken: '15m',
-  secretRefreshToken: 'efa9c9df3b0349346f07607ce059997e',
+  secretRefreshToken: process.env.REFRESH_TOKEN_SECRET,
   expiresIdRefreshToken: '30d',
   expiresRefreshTokenDays: 30,
 };
