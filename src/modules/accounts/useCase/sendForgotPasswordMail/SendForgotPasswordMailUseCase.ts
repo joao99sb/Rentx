@@ -20,7 +20,7 @@ export class SendForgotPasswordMailUseCase {
     @inject('DayjsDateProvider')
     private dateProvicer: IDateProvider,
 
-    @inject('EtherealMailProvider')
+    @inject('MailProvider')
     private mailProvider: IMailProvider
   ) {}
   async execute(email: string): Promise<void> {

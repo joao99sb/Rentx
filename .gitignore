@@ -1,5 +1,7 @@
 node_modules/
 .env
 covarege/
-
+dist
+.vscode
+.ormconfig.json
 tmp/**/*.png
