@@ -1,5 +1,6 @@
 import 'reflect-metadata';
 import 'dotenv/config';
+import cors from 'cors';
 import express, { NextFunction, Request, Response } from 'express';
 import 'express-async-errors';
 import { JsonWebTokenError } from 'jsonwebtoken';
@@ -21,6 +22,7 @@ app.use(express.json());
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerFile));
 app.use('/avatar', express.static(`${upload.tempFolder}/avatar`));
 app.use('/car', express.static(`${upload.tempFolder}/car`));
+app.use(cors());
 app.use(router);
 
 app.use(
