@@ -3,5 +3,5 @@ node_modules/
 covarege/
 dist
 .vscode
-.ormconfig.json
+ormconfig.json
 tmp/**/*.png
