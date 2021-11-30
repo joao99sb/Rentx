@@ -31,7 +31,15 @@ services:
       - database_ignite
     depends_on:
       - database_ignite
-
+  
+  redis:
+    image: redis:alpine
+    ports:
+      - 6379:6379
+    restart: always
+    container_name: redis
+    networks:
+      - inbound
 
 volumes:
   pgdata:
@@ -39,3 +47,4 @@ volumes:
 
 networks:
   inbound:
+    driver: bridge

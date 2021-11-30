@@ -11,11 +11,15 @@ import { AppError } from '@shared/errors/AppError';
 import createConnection from '@shared/infra/typeorm';
 
 import swaggerFile from '../../../swagger.json';
+import rateLimiter from './middleware/reateLimeter';
+
 import '@shared/container';
 import { router } from './routes/index';
 
 createConnection();
 const app = express();
+
+app.use(rateLimiter);
 
 app.use(express.json());
 
